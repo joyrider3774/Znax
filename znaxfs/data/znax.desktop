@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=znax
+Categories=Game;
+Exec=/usr/games/znax/znax
+Icon=/usr/games/znax/icon/znax.png
+StartupWMClass=znax
+
+
