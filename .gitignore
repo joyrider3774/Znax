@@ -29,3 +29,6 @@
 *.exe
 *.out
 *.app
+
+#geany project files
+*.geany
