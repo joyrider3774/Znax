@@ -122,10 +122,15 @@ Usage: Znax \[Options\]
 
 Possible options are:
   -?: show this help message
+  
   -l: enable linear filtering (only works when hardware renderer is used)
+  
   -s: Use Software Renderer
+  
   -f: Show FPS
+  
   -d: Disable VSync (use this in combination with software rendering if it fails without it)
+  
   -r: Run fullscreen at startup (by default starts up as a sizeable window)
   
 ## Credits
