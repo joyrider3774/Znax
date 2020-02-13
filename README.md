@@ -32,6 +32,9 @@ Select a menu option, Select one block.
 Key L: 
 Load the following skin. 
 
+Key F:
+Switch between fullscreen and windowed mode
+
 Escape: 
 Quit to menu, Quit game 
 
