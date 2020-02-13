@@ -3,7 +3,7 @@ VERS=1.0.2
 CC=g++
 
 OPT_LEVEL=-O2 
-CFLAGS=-g -Wall -Wextra
+CFLAGS=-Wall -Wextra
 CPPFLAGS=-I/usr/include -I/usr/include/SDL2
 LDFLAGS=-L/usr/lib
 LDLIBS=-lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lX11
