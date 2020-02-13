@@ -19,7 +19,7 @@ score so here you try to get the highest amount of points in the given time
 period. 
 
 ## How To Play 
-The game is fully playable using the mouse, keyboard and touchscreen (if you don't resize window): 
+The game is fully playable using the mouse, keyboard and touchscreen (if you don't resize the window): 
 
 ### General
 
@@ -98,7 +98,7 @@ sudo make install
 ```
 
 if all went well, a new desktop shortcut in the games menu for znax should be visible at least on the raspberry pi, i have no idea about other systems.
-if not desktop icon is visible you can still run the game by starting a terminal window and executing the following command
+if no desktop icon is visible you can still run the game by starting a terminal window and executing the following command after the install has finished correctly
 
 ```
 /usr/games/znax/znax
@@ -110,13 +110,13 @@ if you don't want to install the game but still play it you can copy the build `
 ```
 cp znax ./znaxfs
 cd znaxfs
-znax
+./znax
 ```
 
 or on windows
 
 ```
-cp znax.exe ./znaxfs
+cp znax.exe znaxfs
 cd znaxfs
 znax.exe
 ```
@@ -141,7 +141,7 @@ Possible options are:
   * -r: Run fullscreen at startup (by default starts up as a sizeable window)
 
 ## Known problems
-If the window is resized or you run fullscreen but the game can't use a full fullscreen mode, in other words letterboxing occurs using the touchscreen will not work. It will think you pressed at the wrong location. I tested touchscreen support using the official raspberry pi touchscreen and it worked, but i never found a solution for the problem i was having with the touchscreen and when letterboxing occurs on the screen. If anyone know a solution for this please let me know.
+If the window is resized or you run fullscreen and the game can't use a full fullscreen mode, in other words letterboxing occurs using the touchscreen will not work. It will think you touched your finger at the wrong location. I tested touchscreen support using the official raspberry pi touchscreen and it worked, but i never found a solution for the problem i was having with the touchscreen and when letterboxing occurs on the screen. If anyone know a solution for this please let me know.
 
 ## Credits
 Original (flash) Game Created by Nick Kouvaris 
