@@ -2,7 +2,7 @@
 Znax is a cross platform puzzle / arcade game using SDL2 libraries.
 It has skin support and can be played using a keyboard, mouse or touchscreen
 
-![Znax screenshot2](/images/znaxscreenshot2.png) ![Znax screenshot1](/images/znaxscreenshot1.png) ![Znax screenshot3](/images/znaxscreenshot3.png)  ![Znax screenshot4](/images/znaxscreenshot4.png)
+![Znax screenshot2](/images/znaxscreenshot2.png) ![Znax screenshot1](/images/znaxscreenshot1.png) ![Znax screenshot3](/images/znaxscreenshot3.png) ![Znax screenshot4](/images/znaxscreenshot4.png) ![Znax screenshot5](/images/znaxscreenshot5.png)
 
 ## What is Znax
 
