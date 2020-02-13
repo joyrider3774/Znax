@@ -4,55 +4,6 @@ It has skin support and can be played using a keyboard, mouse or touchscreen
 
 ![Znax screenshot2](/images/znaxscreenshot2.png) ![Znax screenshot1](/images/znaxscreenshot1.png) ![Znax screenshot3](/images/znaxscreenshot3.png)
 
-## Building
-Znax can be build on linux, i tried on raspberry pi and linux for windows subsystem using a debian distro. It can also be build from mingw32,
-a specific makefile for this is included.
-
-### dependencies
-Znax uses SDL2 libaries, it needs libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev and your system would need to
-be setup to compile programs.
-
-you would generally get these by doing the following on a linux system
-
-```
-sudo apt-get update
-sudo apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libx11-dev
-```
-
-### making the binary
-once you have the source of the game and you have installed the required dependencies you start to build the program. 
-a makefile is included.
-
-you would execute the following command in the main source directory
-```
-make 
-```
-
-## installing
-once the binary has been build you can install the game. I have provided a desktop shortcut and the game will install it. I have only tried this part
-on raspbian buster, but by default the game would install all files to `/usr/games/znax`.
-
-to install you would execute the following command after the binary has been build
-```
-sudo make install
-```
-
-if all went well, a new desktop shortcut in the games menu for znax should be visible at least on the raspberry pi, i have no idea about other systems.
-if not desktop icon is visible you can still run the game by starting a terminal window and executing the following command
-
-```
-/usr/games/znax/znax
-```
-
-
-if you don't want to install the game but still play it you can copy the build `znax` binary to the `znaxfs` directory and you can launch the game from there 
-
-```
-cp znax ./znaxfs
-cd znaxfs
-znax
-```
-
 ## What is Znax
 
 Znax is a remake of a game by Nick Kouvaris.
@@ -103,6 +54,55 @@ Move to the previous lettter.
 
 To erase a letter you have to choose the whitespace. 
 
+## Building
+Znax can be build on linux, i tried on raspberry pi and linux for windows subsystem using a debian distro. It can also be build from mingw32,
+a specific makefile for this is included.
+
+### dependencies
+Znax uses SDL2 libaries, it needs libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev and your system would need to
+be setup to compile programs.
+
+you would generally get these by doing the following on a linux system
+
+```
+sudo apt-get update
+sudo apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libx11-dev
+```
+
+### making the binary
+once you have the source of the game and you have installed the required dependencies you start to build the program. 
+a makefile is included.
+
+you would execute the following command in the main source directory
+```
+make 
+```
+
+## installing
+once the binary has been build you can install the game. I have provided a desktop shortcut and the game will install it. I have only tried this part
+on raspbian buster, but by default the game would install all files to `/usr/games/znax`.
+
+to install you would execute the following command after the binary has been build
+```
+sudo make install
+```
+
+if all went well, a new desktop shortcut in the games menu for znax should be visible at least on the raspberry pi, i have no idea about other systems.
+if not desktop icon is visible you can still run the game by starting a terminal window and executing the following command
+
+```
+/usr/games/znax/znax
+```
+
+
+if you don't want to install the game but still play it you can copy the build `znax` binary to the `znaxfs` directory and you can launch the game from there 
+
+```
+cp znax ./znaxfs
+cd znaxfs
+znax
+```
+
 ## Credits
 Original (flash) Game Created by Nick Kouvaris 
 http://lightforce.freestuff.gr
@@ -120,10 +120,10 @@ Game audio are some parts recorded by myselve and modified with goldwave studio,
 some parts are made using [SFXR](http://www.drpetter.se/project_sfxr.html) 
 
 Game uses
- SDL2: [https://www.libsdl.org](https://www.libsdl.org)
- SDL2_image: [https://www.libsdl.org/projects/SDL_image](https://www.libsdl.org/projects/SDL_image)
- SDL2_mixer: [https://www.libsdl.org/projects/SDL_mixer](https://www.libsdl.org/projects/SDL_mixer)
- SDL2_ttf: [https://www.libsdl.org/projects/SDL_ttf](https://www.libsdl.org/projects/SDL_ttf)
- SDL2_gfx: [https://sourceforge.net/projects/sdl2gfx](https://sourceforge.net/projects/sdl2gfx)
- Roboto font family by google: [https://fonts.google.com](https://fonts.google.com)
+⋅⋅* SDL2: [https://www.libsdl.org](https://www.libsdl.org)
+⋅⋅* SDL2_image: [https://www.libsdl.org/projects/SDL_image](https://www.libsdl.org/projects/SDL_image)
+⋅⋅* SDL2_mixer: [https://www.libsdl.org/projects/SDL_mixer](https://www.libsdl.org/projects/SDL_mixer)
+⋅⋅* SDL2_ttf: [https://www.libsdl.org/projects/SDL_ttf](https://www.libsdl.org/projects/SDL_ttf)
+⋅⋅* SDL2_gfx: [https://sourceforge.net/projects/sdl2gfx](https://sourceforge.net/projects/sdl2gfx)
+⋅⋅* Roboto font family by google: [https://fonts.google.com](https://fonts.google.com)
 
