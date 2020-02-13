@@ -21,7 +21,7 @@ period.
 ## How To Play 
 The game is fully playable using the mouse, keyboard and touchscreen (if you don't resize window): 
 
-### general
+### General
 
 arrow keys: 
 Move in menu's, Move the cursor around while playing. 
@@ -62,7 +62,7 @@ To erase a letter you have to choose the whitespace.
 Znax can be build on linux, i tried on raspberry pi and linux for windows subsystem using a debian distro. It can also be build from mingw32,
 a specific makefile for this is included.
 
-### dependencies
+### Dependencies
 Znax uses SDL2 libaries, it needs libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev and your system would need to
 be setup to compile programs.
 
@@ -74,7 +74,7 @@ sudo apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer
 ```
 on a windows system you would need to have mingw32 installed along with msys and download the developper versions of the libaries yourselve and place them in the correct directories of mingw32 / msys. (links for the libs are in the credits below)
 
-### making the binary
+### Making the binary
 once you have the source of the game and you have installed the required dependencies you start to build the program. 
 a makefile is included.
 
@@ -88,7 +88,7 @@ on windows you would need to specify the extra makefile included to build on min
 make -f Makefile.win32mingw
 ```
 
-## installing
+## Installing
 once the binary has been build you can install the game. I have provided a desktop shortcut and the game will install it. I have only tried this part
 on raspbian buster, but by default the game would install all files to `/usr/games/znax`.
 
