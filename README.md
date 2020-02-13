@@ -58,6 +58,9 @@ Move to the previous lettter.
 
 To erase a letter you have to choose the whitespace. 
 
+## Skins
+Znax supports skins, they are replacement graphics. At any point in the game (except intro scenes) you can press `L` on the keyboard to switch skins. Last skin used will be remembererd and used upon next play. If you want to create your own skins simply copy the files from the `graphics` directory to a new directory under the `skins` directory. You don't need to change all skin graphics, if some files are not provided your skin directory, the game will simply load the default graphcis. 
+
 ## Building
 Znax can be build on linux, i tried on raspberry pi and linux for windows subsystem using a debian distro. It can also be build from mingw32,
 a specific makefile for this is included.
