@@ -120,9 +120,9 @@ Game audio are some parts recorded by myselve and modified with goldwave studio,
 some parts are made using [SFXR](http://www.drpetter.se/project_sfxr.html) 
 
 Game uses
-  *SDL2: 
+  * SDL2: 
    [https://www.libsdl.org](https://www.libsdl.org)
-  *SDL2_image:
+  * SDL2_image:
    [https://www.libsdl.org/projects/SDL_image](https://www.libsdl.org/projects/SDL_image)
   * SDL2_mixer:
    [https://www.libsdl.org/projects/SDL_mixer](https://www.libsdl.org/projects/SDL_mixer)
