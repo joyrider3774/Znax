@@ -2,7 +2,7 @@
 Znax is a cross platform puzzle / arcade game using SDL2 libraries.
 It has skin support and can be played using a keyboard, mouse or touchscreen
 
-![Znax screenshot2](/images/znaxscreenshot2.png) ![Znax screenshot1](/images/znaxscreenshot1.png) ![Znax screenshot3](/images/znaxscreenshot3.png)
+![Znax screenshot2](/images/znaxscreenshot2.png) ![Znax screenshot1](/images/znaxscreenshot1.png) ![Znax screenshot3](/images/znaxscreenshot3.png)  ![Znax screenshot4](/images/znaxscreenshot4.png)
 
 ## What is Znax
 
@@ -120,6 +120,14 @@ cp znax.exe ./znaxfs
 cd znaxfs
 znax.exe
 ```
+
+### Uninstall
+To uninstall the game once it has been installed (on linux) simply type the following below. It will remove the game directory and desktop shortcut
+
+```
+sudo make uninstall
+```
+
 ## Command line options
 
 Usage: Znax \[Options\]

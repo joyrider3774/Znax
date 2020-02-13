@@ -20,6 +20,8 @@ MUSICDIR=$(GAMEDIR)/music
 SOUNDDIR=$(GAMEDIR)/sound
 SKINSDIR=$(GAMEDIR)/skins
 REDSKINDIR=$(SKINSDIR)/red
+NUMBERSKINDIR=$(SKINSDIR)/numbers
+NEWBLOCKSSKINDIR=$(SKINSDIR)/newblocks
 ICONDIR=$(GAMEDIR)/icon
 DESKTOPDIR=$(PREFIX)/share/applications
 
@@ -43,6 +45,8 @@ install: all
 	install -d $(SKINSDIR)
 	install -d $(DESKTOPDIR)
 	install -d $(REDSKINDIR)
+	install -d $(NUMBERSKINDIR)
+	install -d $(NEWBLOCKSSKINDIR)
 	install -d $(ICONDIR)
 
 	install -m 0755 znax $(GAMEDIR)
@@ -51,6 +55,7 @@ install: all
 	install -m 0644 znaxfs/data/readme.txt $(DATADIR)
 	install -m 0644 znaxfs/data/znax.desktop $(DESKTOPDIR) 
 	install -m 0644 znaxfs/data/znax.png $(ICONDIR)
+	
 	install -m 0644 znaxfs/graphics/background.png $(GRAPHICSDIR)
 	install -m 0644 znaxfs/graphics/blocks.png $(GRAPHICSDIR)
 	install -m 0644 znaxfs/graphics/credits.png $(GRAPHICSDIR)
@@ -76,6 +81,35 @@ install: all
 	install -m 0644 znaxfs/graphics/selectgame.png $(GRAPHICSDIR)
 	install -m 0644 znaxfs/graphics/timeover.png $(GRAPHICSDIR)
 	install -m 0644 znaxfs/graphics/titlescreen.png $(GRAPHICSDIR)
+	
+	install -m 0644 znaxfs/skins/newblocks/background.png $(NEWBLOCKSSKINDIR)
+	install -m 0644 znaxfs/skins/newblocks/blocks.png $(NEWBLOCKSSKINDIR)
+	
+	install -m 0644 znaxfs/skins/numbers/background.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/blocks.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/credits.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/credits1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/credits2.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/fixedtimer1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/fixedtimer2.png  $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/go.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/highscores.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/highscores1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/highscores2.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/intro1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/intro2.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/intro3.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/play1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/play2.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/quit1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/quit2.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/ready.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/relativetimer1.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/relativetimer2.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/selectgame.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/timeover.png $(NUMBERSKINDIR)
+	install -m 0644 znaxfs/skins/numbers/titlescreen.png $(NUMBERSKINDIR)
+	
 	install -m 0644 znaxfs/skins/red/background.png $(REDSKINDIR)
 	install -m 0644 znaxfs/skins/red/blocks.png $(REDSKINDIR)
 	install -m 0644 znaxfs/skins/red/credits.png $(REDSKINDIR)
@@ -101,7 +135,9 @@ install: all
 	install -m 0644 znaxfs/skins/red/selectgame.png $(REDSKINDIR)
 	install -m 0644 znaxfs/skins/red/timeover.png $(REDSKINDIR)
 	install -m 0644 znaxfs/skins/red/titlescreen.png $(REDSKINDIR)
+	
 	install -m 0644 znaxfs/music/title.mod $(MUSICDIR)
+	
 	install -m 0644 znaxfs/sound/blockselect.wav $(SOUNDDIR)
 	install -m 0644 znaxfs/sound/delete.wav $(SOUNDDIR)
 	install -m 0644 znaxfs/sound/error.wav $(SOUNDDIR)
