@@ -19,14 +19,14 @@ score so here you try to get the highest amount of points in the given time
 period. 
 
 ## How To Play 
-The game is fully playable using the mouse and keyboard: 
+The game is fully playable using the mouse, keyboard and touchscreen (if you don't resize window): 
 
 ### general
 
 arrow keys: 
 Move in menu's, Move the cursor around while playing. 
 
-enter / mouse button: 
+enter / mouse button / finger touch: 
 Select a menu option, Select one block. 
 
 Key L: 
@@ -45,6 +45,7 @@ Key pagedown:
 Increase Volume 
 
 ### Entering a highscore name 
+can only be done using keyboard
 
 arrow up & down: 
 Cycle through the letters. 
@@ -130,7 +131,10 @@ Possible options are:
   * -f: Show FPS
   * -d: Disable VSync (use this in combination with software rendering if it fails without it)
   * -r: Run fullscreen at startup (by default starts up as a sizeable window)
-  
+
+## Known problems
+If the window is resized or you run fullscreen but the game can't use a full fullscreen mode, in other words letterboxing occurs using the touchscreen will not work. It will think you pressed at the wrong location. I tested touchscreen support using the official raspberry pi touchscreen and it worked, but i never found a solution for the problem i was having with the touchscreen and when letterboxing occurs on the screen. If anyone know a solution for this please let me know.
+
 ## Credits
 Original (flash) Game Created by Nick Kouvaris 
 http://lightforce.freestuff.gr
