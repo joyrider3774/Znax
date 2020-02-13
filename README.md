@@ -110,7 +110,7 @@ if you don't want to install the game but still play it you can copy the build `
 ```
 cp znax ./znaxfs
 cd znaxfs
-znax
+./znax
 ```
 
 or on windows
