@@ -141,7 +141,7 @@ http://lightforce.freestuff.gr
 
 Original Gp2x Game and SDL2 version Created by Willems Davy
 Willems Soft 2020
-[https://Http://www.willemssoft.be](Http://www.willemssoft.be)
+[https//www.willemssoft.be](Https://www.willemssoft.be)
 
 Music is made by Donskeeto! 
 Thanks man
