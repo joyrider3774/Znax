@@ -68,6 +68,7 @@ you would generally get these by doing the following on a linux system
 sudo apt-get update
 sudo apt-get install build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libx11-dev
 ```
+on a windows system you would need to have mingw32 installed along with msys and download the developper versions of the libaries yourselve and place them in the correct directories of mingw32 / msys. (links for the libs are in the credits below)
 
 ### making the binary
 once you have the source of the game and you have installed the required dependencies you start to build the program. 
@@ -76,6 +77,11 @@ a makefile is included.
 you would execute the following command in the main source directory
 ```
 make 
+```
+
+on windows you would need to specify the extra makefile included to build on mingw32
+```
+make -f Makefile.win32mingw
 ```
 
 ## installing
@@ -103,6 +109,25 @@ cd znaxfs
 znax
 ```
 
+or on windows
+
+```
+cp znax.exe ./znaxfs
+cd znaxfs
+znax.exe
+```
+## Command line options
+
+Usage: Znax \[Options\]
+
+Possible options are:
+  -?: show this help message
+  -l: enable linear filtering (only works when hardware renderer is used)
+  -s: Use Software Renderer
+  -f: Show FPS
+  -d: Disable VSync (use this in combination with software rendering if it fails without it)
+  -r: Run fullscreen at startup (by default starts up as a sizeable window)
+  
 ## Credits
 Original (flash) Game Created by Nick Kouvaris 
 http://lightforce.freestuff.gr
