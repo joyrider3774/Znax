@@ -29,6 +29,9 @@ Select a menu option, Select one block.
 Key L: 
 Load the following skin. 
 
+Key F:
+switch between fullscreen and windowed mode
+
 Escape: 
 Quit to menu, Quit game 
 
@@ -63,12 +66,15 @@ http://lightforce.freestuff.gr
 
 Original Gp2x Game and SDL2 version Created by Willems Davy
 Willems Soft 2020
-Http://www.willemssoft.be
+Https://www.willemssoft.be
 
 Music is made by Donskeeto! 
 Thanks man
 
 Game graphics created in paint shop pro 7
+
+Game audio are some parts recorded by myselve and modified with goldwave studio,
+some parts are made using SFXR ( http://www.drpetter.se/project_sfxr.html )
 
 Game uses:
  SDL2: https://www.libsdl.org/
