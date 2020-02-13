@@ -32,3 +32,6 @@
 
 #geany project files
 *.geany
+
+#locally build binary
+znax
