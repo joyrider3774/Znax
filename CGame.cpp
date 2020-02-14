@@ -674,7 +674,6 @@ void CGame::GameTypeMenu() {
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   Uint32 AlphaTimer = SDL_GetTicks();
   while (GameState == GSGameTypeMenu) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     if (MusicCount > 0)
       if (GlobalSoundEnabled)
         if (!Mix_PlayingMusic()) {
@@ -734,9 +733,8 @@ void CGame::GameTypeMenu() {
         int RealX;
         int RealY;
         if (Event.type == SDL_FINGERUP) {
-          SDL_Surface *ScreenSurface = SDL_GetWindowSurface(SdlWindow);
-          RealX = Event.tfinger.x * ScreenSurface->w;
-          RealY = Event.tfinger.y * ScreenSurface->h;
+          RealX = Event.tfinger.x * 320; //needs to be logical size
+          RealY = Event.tfinger.y * 240; //needs to be logical size
           SDL_Log("touch: %d %d\n", RealX, RealY);
         } else {
           RealX = Event.button.x;
@@ -758,6 +756,7 @@ void CGame::GameTypeMenu() {
         }
       }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     Menu->Draw(Renderer);
     // tekenen naar buffer
     if (alpha < MaxAlpha) {
@@ -793,7 +792,6 @@ void CGame::Credits() {
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   Uint32 AlphaTimer = SDL_GetTicks();
   while (GameState == GSCredits) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     if (MusicCount > 0)
       if (GlobalSoundEnabled)
         if (!Mix_PlayingMusic()) {
@@ -831,7 +829,7 @@ void CGame::Credits() {
           break;
         }
     }
-
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     SDL_RenderCopy(Renderer, IMGTitleScreen, NULL, NULL);
     SDL_RenderCopy(Renderer, IMGCredits, NULL, &Rect1);
 
@@ -867,7 +865,6 @@ void CGame::TitleScreen() {
   Uint32 AlphaTimer = SDL_GetTicks();
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   while (GameState == GSTitleScreen) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     if (MusicCount > 0)
       if (GlobalSoundEnabled)
         if (!Mix_PlayingMusic()) {
@@ -883,9 +880,8 @@ void CGame::TitleScreen() {
         int RealX;
         int RealY;
         if (Event.type == SDL_FINGERUP) {
-          SDL_Surface *ScreenSurface = SDL_GetWindowSurface(SdlWindow);
-          RealX = Event.tfinger.x * ScreenSurface->w;
-          RealY = Event.tfinger.y * ScreenSurface->h;
+          RealX = Event.tfinger.x * 320; //needs to be logical size
+          RealY = Event.tfinger.y * 240; //needs to be logical size
           SDL_Log("touch: %d %d\n", RealX, RealY);
         } else {
           RealX = Event.button.x;
@@ -974,6 +970,7 @@ void CGame::TitleScreen() {
           break;
         }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     Menu->Draw(Renderer);
 
     if (alpha < MaxAlpha) {
@@ -1012,7 +1009,6 @@ void CGame::GetHighScoreName(char NameIn[21], int Place, int PScore) {
     Name[MaxSelection] = chr(asci);
   char Tekst[100];
   while (!End) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     if (MusicCount > 0)
       if (GlobalSoundEnabled)
         if (!Mix_PlayingMusic()) {
@@ -1101,6 +1097,7 @@ void CGame::GetHighScoreName(char NameIn[21], int Place, int PScore) {
         }
       }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     SDL_RenderCopy(Renderer, IMGHighScores, NULL, NULL);
 
     for (Teller = 0; Teller < 9; Teller++) {
@@ -1177,7 +1174,6 @@ void CGame::TimeOver() {
   memset(Name, '\0', 21);
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   while (GameState == GSTimeOver) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     while (SDL_PollEvent(&Event)) {
       if (Event.type == SDL_KEYDOWN) {
         switch (Event.key.keysym.sym) {
@@ -1201,6 +1197,7 @@ void CGame::TimeOver() {
         }
       }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     World->Draw(Renderer);
 
     switch (Counter) {
@@ -1278,7 +1275,6 @@ void CGame::ReadyGo() {
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   Uint32 AlphaTimer = SDL_GetTicks();
   while (GameState == GSReadyGo) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
 
     if (GlobalSoundEnabled) {
       if (!Mix_PlayingMusic()) {
@@ -1325,6 +1321,7 @@ void CGame::ReadyGo() {
           break;
         }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     World->Draw(Renderer);
     switch (Counter) {
     case 1:
@@ -1472,7 +1469,6 @@ void CGame::Game() {
   Uint32 FpsTime = SDL_GetTicks();
 
   while (GameState == GSGame) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     if (GlobalSoundEnabled) {
       if (!Mix_PlayingMusic()) {
         if (MusicCount > 1) {
@@ -1552,10 +1548,8 @@ void CGame::Game() {
         int RealX;
         int RealY;
         if (Event.type == SDL_FINGERUP) {
-          SDL_Surface *ScreenSurface = SDL_GetWindowSurface(SdlWindow);
-          RealX = Event.tfinger.x * ScreenSurface->w;
-          RealY = Event.tfinger.y * ScreenSurface->h;
-
+          RealX = Event.tfinger.x * 320; //needs to be logical size
+          RealY = Event.tfinger.y * 240; //needs to be logical size
           SDL_Log("touch: %d %d\n", RealX, RealY);
         } else {
           RealX = Event.button.x;
@@ -1576,6 +1570,7 @@ void CGame::Game() {
           GameState = GSTitleScreen;
       }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     World->Draw(Renderer);
     Selector->Draw(Renderer);
     if (AddToScore != 0) {
@@ -1721,7 +1716,6 @@ void CGame::ShowHighScores() {
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   Uint32 AlphaTimer = SDL_GetTicks();
   while (GameState == GSShowHighScores) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     if (MusicCount > 0)
       if (GlobalSoundEnabled)
         if (!Mix_PlayingMusic()) {
@@ -1770,6 +1764,7 @@ void CGame::ShowHighScores() {
           break;
         }
     }
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     SDL_RenderCopy(Renderer, IMGHighScores, NULL, NULL);
 
     switch (ScoreType) {

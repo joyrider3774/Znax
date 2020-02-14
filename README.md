@@ -135,8 +135,8 @@ Possible options are:
   * -d: Disable VSync (use this in combination with software rendering if it fails without it)
   * -r: Run fullscreen at startup (by default starts up as a sizeable window)
 
-## Known problems
-If the window is resized or you run fullscreen and the game can't use a full fullscreen mode, in other words letterboxing occurs using the touchscreen will not work. It will think you touched your finger at the wrong location. I tested touchscreen support using the official raspberry pi touchscreen and it worked, but i never found a solution for the problem i was having with the touchscreen and when letterboxing occurs on the screen. If anyone know a solution for this please let me know.
+## Official Raspberry pi touchscreen
+When using the official raspberry pi touch screen, you'll notice if the game runs in windowed mode not everything is visible. You have to either press the F key to goto fullscreen mode or you must start up the game running full screen using the `-r` commandline parameter.
 
 ## Credits
 Original (flash) Game Created by Nick Kouvaris 
