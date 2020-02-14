@@ -41,7 +41,6 @@ void CGame::UnloadMusic() {
       if (Music[Teller])
         Mix_FreeMusic(Music[Teller]);
   }
-  // Mix_FreeMusic(Music[0]);
 }
 
 void CGame::ToggleFullscreen() {
@@ -88,7 +87,6 @@ void CGame::SearchForMusic() {
         if (strncmp(".", Entry->d_name, 1) &&
             (strcmp("title.mod", Entry->d_name) != 0) &&
             (Teller < MaxMusicFiles)) {
-          //	printf("%s\n",Entry->d_name);
           if (GlobalSoundEnabled) {
             Music[Teller] = Mix_LoadMUS(FileName);
             Teller++;
@@ -119,7 +117,6 @@ void CGame::SearchForSkins() {
       sprintf(FileName, "%sskins/%s", StartPath, Entry->d_name);
       stat(FileName, &Stats);
       if (S_ISDIR(Stats.st_mode)) {
-        // printf("%s\n",Entry->d_name);
         if (strncmp(".", Entry->d_name, 1) && (Teller < MaxSkins) &&
             (strlen(Entry->d_name) < FILENAME_MAX - 1)) {
           sprintf(InstalledSkins[Teller], "%s", Entry->d_name);
@@ -599,7 +596,6 @@ void CGame::SaveSettings() {
     fprintf(SettingsFile, "Volume=%d\n", Volume);
     fprintf(SettingsFile, "Skin=%s\n", SkinName);
     fclose(SettingsFile);
-    // sync();
   }
 }
 
@@ -681,9 +677,7 @@ void CGame::GameTypeMenu() {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
-    /* if(GlobalSoundEnabled)
-        if(!Mix_PlayingMusic())
-            Mix_PlayMusic(Music[MUS_TITLE],0);*/
+        
     while (SDL_PollEvent(&Event)) {
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
@@ -735,7 +729,6 @@ void CGame::GameTypeMenu() {
         if (Event.type == SDL_FINGERUP) {
           RealX = Event.tfinger.x * 320; //needs to be logical size
           RealY = Event.tfinger.y * 240; //needs to be logical size
-          SDL_Log("touch: %d %d\n", RealX, RealY);
         } else {
           RealX = Event.button.x;
           RealY = Event.button.y;
@@ -758,7 +751,7 @@ void CGame::GameTypeMenu() {
     }
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     Menu->Draw(Renderer);
-    // tekenen naar buffer
+
     if (alpha < MaxAlpha) {
       alpha = trunc(MaxAlpha *
                     ((double)(SDL_GetTicks() - AlphaTimer) / MaxAlphaTime));
@@ -799,9 +792,7 @@ void CGame::Credits() {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
-    /*if(GlobalSoundEnabled)
-        if(!Mix_PlayingMusic())
-            Mix_PlayMusic(Music[MUS_TITLE],0);*/
+        
     while (SDL_PollEvent(&Event)) {
 
       if (Event.type == SDL_QUIT)
@@ -882,7 +873,6 @@ void CGame::TitleScreen() {
         if (Event.type == SDL_FINGERUP) {
           RealX = Event.tfinger.x * 320; //needs to be logical size
           RealY = Event.tfinger.y * 240; //needs to be logical size
-          SDL_Log("touch: %d %d\n", RealX, RealY);
         } else {
           RealX = Event.button.x;
           RealY = Event.button.y;
@@ -1016,12 +1006,6 @@ void CGame::GetHighScoreName(char NameIn[21], int Place, int PScore) {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
-    /* if(GlobalSoundEnabled)
-     if(!Mix_PlayingMusic())
-     {
-         Mix_PlayMusic(Music[SelectedMusic],0);
-         SetVolume(Volume);
-     }*/
     while (SDL_PollEvent(&Event)) {
 
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
@@ -1399,7 +1383,6 @@ void CGame::Intro() {
   Uint32 Time1 = SDL_GetTicks();
   Uint32 AlphaTimer = SDL_GetTicks();
   while (GameState == GSIntro) {
-    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     while (SDL_PollEvent(&Event)) {
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP))
         GameState = GSTitleScreen;
@@ -1408,7 +1391,8 @@ void CGame::Intro() {
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
     }
-
+    
+    SDL_SetRenderTarget(Renderer, TextureBuffer1);
     switch (IntroScreenNr) {
     case 1:
       SDL_RenderCopy(Renderer, IMGIntro1, NULL, NULL);
@@ -1525,7 +1509,6 @@ void CGame::Game() {
             if (GlobalSoundEnabled) {
               Mix_HaltMusic();
               Mix_PlayMusic(Music[SelectedMusic], 0);
-              // Mix_HookMusicFinished(MusicFinished);
               SetVolume(Volume);
             }
           }
@@ -1550,7 +1533,6 @@ void CGame::Game() {
         if (Event.type == SDL_FINGERUP) {
           RealX = Event.tfinger.x * 320; //needs to be logical size
           RealY = Event.tfinger.y * 240; //needs to be logical size
-          SDL_Log("touch: %d %d\n", RealX, RealY);
         } else {
           RealX = Event.button.x;
           RealY = Event.button.y;
@@ -1702,7 +1684,6 @@ void CGame::SaveHighScores() {
     fwrite(HighScores[Relative], sizeof(HighScores[Relative][0]), 10,
            FHighScores);
     fclose(FHighScores);
-    // sync();
   }
 }
 
@@ -1723,9 +1704,6 @@ void CGame::ShowHighScores() {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
-    /* if(GlobalSoundEnabled)
-         if(!Mix_PlayingMusic())
-             Mix_PlayMusic(Music[MUS_TITLE],0);*/
     while (SDL_PollEvent(&Event)) {
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
         if (ScoreType == Fixed)
