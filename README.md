@@ -138,6 +138,9 @@ Possible options are:
 ## Official Raspberry pi touchscreen
 When using the official raspberry pi touch screen, you'll notice if the game runs in windowed mode not everything is visible. You have to either press the F key to goto fullscreen mode or you must start up the game running full screen using the `-r` commandline parameter.
 
+## Older Raspberry pi's (PI2 for example)
+The game seems to start with hardware rendering by default, but on my rapsberry pi 2 this was very sluggish and slow. This can be fixed by running the game in software mode using `-s` command line parameter. If the game fails to start using that parameter also provide the `-d` to disable vsync. I noticed SDL had problems creating the renderer sometimes on these machines in software mode when vsync was enabled
+
 ## Credits
 Original (flash) Game Created by Nick Kouvaris 
 http://lightforce.freestuff.gr
