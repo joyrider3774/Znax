@@ -4,6 +4,8 @@ It has skin support and can be played using a keyboard, mouse or touchscreen
 
 ![Znax screenshot2](/images/znaxscreenshot2.png) ![Znax screenshot1](/images/znaxscreenshot1.png) ![Znax screenshot3](/images/znaxscreenshot3.png) ![Znax screenshot4](/images/znaxscreenshot4.png) ![Znax screenshot5](/images/znaxscreenshot5.png)
 
+[Latest Release](https://github.com/joyrider3774/Znax/releases/latest)
+
 ## What is Znax
 
 Znax is a remake of a game by Nick Kouvaris.
