@@ -173,3 +173,5 @@ Game uses
   * Roboto font family by google:
    [https://fonts.google.com](https://fonts.google.com)
 
+## Donations
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/joyrider3774)
