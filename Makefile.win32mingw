@@ -1,21 +1,31 @@
-PROG=znax
-VERS=1.0.2
+SRC_DIR=src
+OBJ_DIR=obj
+BIN_DIR=.
+
+EXE=$(BIN_DIR)/znax.exe
+SRC=$(wildcard $(SRC_DIR)/*.cpp)
+OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
 CC=g++
 OPT_LEVEL=-O2
 CFLAGS=-Wall -Wextra
 CPPFLAGS=-I/usr/include -I/usr/include/SDL2
 LDFLAGS=-L/usr/lib -m32 -mwindows -static-libgcc -static-libstdc++
 LDLIBS=-lMingw32 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lSDL2
-RM=/bin/rm -f
-OBJS=znax.o CGame.o CSelector.o CMainMenu.o CGameTypeMenu.o CBlock.o CWorldParts.o
 
-.PHONY: clean distclean
-all: $(PROG)
-%.o: %.cpp
-		$(CC) $(CFLAGS) $(OPT_LEVEL) $(CPPFLAGS) -c $< -o $@  
-$(PROG): $(OBJS)
-		$(CC) $(LDFLAGS) $(TARGET_ARCH) $^ -o $@ $(LDLIBS)
-		cp -f znax.exe ./znaxfs/znax.exe
+
+.PHONY: all clean
+
+all: $(EXE)
+
+$(EXE): $(OBJS)
+	$(CC) $(LDFLAGS) $(TARGET_ARCH) $^ $(LDLIBS) -o $@ 
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(BIN_DIR) $(OBJ_DIR):
+	mkdir -p $@
+
 clean:
-		$(RM) *~ $(OBJS) $(PROG)
-.PHONY:  clean
+	$(RM) -rv *~ $(OBJS) $(EXE)
