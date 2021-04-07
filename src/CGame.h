@@ -51,7 +51,7 @@ private:
   CWorldParts *World = NULL;
   GameTypes GameType = Fixed;
   SHighScore HighScores[2][10];
-  char StartPath[PATH_MAX] = {'\0'};
+  char DataPath[PATH_MAX] = {'\0'};
   bool GlobalSoundEnabled = true;
   bool ShowFPS = false;
   SDL_Texture *TextureBuffer1 = NULL, *TextureBuffer2 = NULL;

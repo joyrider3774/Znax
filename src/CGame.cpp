@@ -72,16 +72,16 @@ void CGame::SearchForMusic() {
   char Path[PATH_MAX + 20]; //+20 to get rid of warnings from sprintf stuff not
                             // sure how to fix
   if (GlobalSoundEnabled) {
-    sprintf(FileName, "%smusic/title.mod", StartPath);
+    sprintf(FileName, "%smusic/title.mod", DataPath);
     Music[0] = Mix_LoadMUS(FileName);
   }
   Teller = 1;
-  sprintf(Path, "%smusic", StartPath);
+  sprintf(Path, "%smusic", DataPath);
   Directory = opendir(Path);
   if (Directory) {
     struct dirent *Entry = readdir(Directory);
     while (Entry) {
-      sprintf(FileName, "%smusic/%s", StartPath, Entry->d_name);
+      sprintf(FileName, "%smusic/%s", DataPath, Entry->d_name);
       stat(FileName, &Stats);
       if (!S_ISDIR(Stats.st_mode)) {
         if (strncmp(".", Entry->d_name, 1) &&
@@ -106,7 +106,7 @@ void CGame::SearchForSkins() {
   int Teller = 0;
   char Path[PATH_MAX + 20]; //+20 to get rid of warnings from sprintf stuff not
                             // sure how to fix
-  sprintf(Path, "%sskins", StartPath);
+  sprintf(Path, "%sskins", DataPath);
   Directory = opendir(Path);
   if (Directory) {
     struct dirent *Entry = readdir(Directory);
@@ -114,7 +114,7 @@ void CGame::SearchForSkins() {
                   20]; //+20 to get rid of warnings from sprintf stuff not sure
                        // how to fix
     while (Entry) {
-      sprintf(FileName, "%sskins/%s", StartPath, Entry->d_name);
+      sprintf(FileName, "%sskins/%s", DataPath, Entry->d_name);
       stat(FileName, &Stats);
       if (S_ISDIR(Stats.st_mode)) {
         if (strncmp(".", Entry->d_name, 1) && (Teller < MaxSkins) &&
@@ -241,21 +241,21 @@ void CGame::LoadGraphics() {
   if (IMGCredits)
     SDL_DestroyTexture(IMGCredits);
 
-  sprintf(FileName, "%sskins/%s/highscores.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/highscores.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/highscores.png", StartPath);
+    sprintf(FileName, "%sgraphics/highscores.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGHighScores = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/fixedtimer1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/fixedtimer1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/fixedtimer1.png", StartPath);
+    sprintf(FileName, "%sgraphics/fixedtimer1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -263,11 +263,11 @@ void CGame::LoadGraphics() {
   IMGFixedTimer1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/relativetimer1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/relativetimer1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/relativetimer1.png", StartPath);
+    sprintf(FileName, "%sgraphics/relativetimer1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -275,11 +275,11 @@ void CGame::LoadGraphics() {
   IMGRelativeTimer1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/fixedtimer2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/fixedtimer2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/fixedtimer2.png", StartPath);
+    sprintf(FileName, "%sgraphics/fixedtimer2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -287,11 +287,11 @@ void CGame::LoadGraphics() {
   IMGFixedTimer2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/relativetimer2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/relativetimer2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/relativetimer2.png", StartPath);
+    sprintf(FileName, "%sgraphics/relativetimer2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -299,11 +299,11 @@ void CGame::LoadGraphics() {
   IMGRelativeTimer2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/selectgame.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/selectgame.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/selectgame.png", StartPath);
+    sprintf(FileName, "%sgraphics/selectgame.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -311,11 +311,11 @@ void CGame::LoadGraphics() {
   IMGSelectGame = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/credits.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/credits.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/credits.png", StartPath);
+    sprintf(FileName, "%sgraphics/credits.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -323,11 +323,11 @@ void CGame::LoadGraphics() {
   IMGCredits = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/titlescreen.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/titlescreen.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/titlescreen.png", StartPath);
+    sprintf(FileName, "%sgraphics/titlescreen.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -335,11 +335,11 @@ void CGame::LoadGraphics() {
   IMGTitleScreen = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/play1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/play1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/play1.png", StartPath);
+    sprintf(FileName, "%sgraphics/play1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -347,11 +347,11 @@ void CGame::LoadGraphics() {
   IMGPlay1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/play2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/play2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/play2.png", StartPath);
+    sprintf(FileName, "%sgraphics/play2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -359,11 +359,11 @@ void CGame::LoadGraphics() {
   IMGPlay2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/quit1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/quit1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/quit1.png", StartPath);
+    sprintf(FileName, "%sgraphics/quit1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -371,11 +371,11 @@ void CGame::LoadGraphics() {
   IMGQuit1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/quit2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/quit2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/quit2.png", StartPath);
+    sprintf(FileName, "%sgraphics/quit2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -383,11 +383,11 @@ void CGame::LoadGraphics() {
   IMGQuit2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/credits2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/credits2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/credits2.png", StartPath);
+    sprintf(FileName, "%sgraphics/credits2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -395,11 +395,11 @@ void CGame::LoadGraphics() {
   IMGCredits2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/credits1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/credits1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/credits1.png", StartPath);
+    sprintf(FileName, "%sgraphics/credits1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -407,11 +407,11 @@ void CGame::LoadGraphics() {
   IMGCredits1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/highscores2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/highscores2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/highscores2.png", StartPath);
+    sprintf(FileName, "%sgraphics/highscores2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -419,11 +419,11 @@ void CGame::LoadGraphics() {
   IMGHighScores2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/highscores1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/highscores1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/highscores1.png", StartPath);
+    sprintf(FileName, "%sgraphics/highscores1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -431,71 +431,71 @@ void CGame::LoadGraphics() {
   IMGHighScores1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/intro1.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/intro1.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/intro1.png", StartPath);
+    sprintf(FileName, "%sgraphics/intro1.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGIntro1 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/intro2.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/intro2.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/intro2.png", StartPath);
+    sprintf(FileName, "%sgraphics/intro2.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGIntro2 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/intro3.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/intro3.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/intro3.png", StartPath);
+    sprintf(FileName, "%sgraphics/intro3.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGIntro3 = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/timeover.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/timeover.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/timeover.png", StartPath);
+    sprintf(FileName, "%sgraphics/timeover.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGTimeOver = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/ready.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/ready.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/ready.png", StartPath);
+    sprintf(FileName, "%sgraphics/ready.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGReady = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/go.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/go.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/go.png", StartPath);
+    sprintf(FileName, "%sgraphics/go.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGGo = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/cursor.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/cursor.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/cursor.png", StartPath);
+    sprintf(FileName, "%sgraphics/cursor.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -503,11 +503,11 @@ void CGame::LoadGraphics() {
   IMGCursor = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/blocks.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/blocks.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/blocks.png", StartPath);
+    sprintf(FileName, "%sgraphics/blocks.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   SDL_SetColorKey(TmpSurface, SDL_TRUE,
@@ -515,11 +515,11 @@ void CGame::LoadGraphics() {
   IMGBlocks = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
   SDL_FreeSurface(TmpSurface);
 
-  sprintf(FileName, "%sskins/%s/background.png", StartPath, SkinName);
+  sprintf(FileName, "%sskins/%s/background.png", DataPath, SkinName);
   if (FileExists(FileName))
     TmpSurface = IMG_Load(FileName);
   else {
-    sprintf(FileName, "%sgraphics/background.png", StartPath);
+    sprintf(FileName, "%sgraphics/background.png", DataPath);
     TmpSurface = IMG_Load(FileName);
   }
   IMGBackground = SDL_CreateTextureFromSurface(Renderer, TmpSurface);
@@ -1788,33 +1788,33 @@ void CGame::ShowHighScores() {
 void CGame::LoadSounds() {
   if (GlobalSoundEnabled) {
     char FileName[PATH_MAX + FILENAME_MAX];
-    sprintf(FileName, "%ssound/readygo.wav", StartPath);
+    sprintf(FileName, "%ssound/readygo.wav", DataPath);
     Sounds[SND_READYGO] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/one.wav", StartPath);
+    sprintf(FileName, "%ssound/one.wav", DataPath);
     Sounds[SND_1] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/two.wav", StartPath);
+    sprintf(FileName, "%ssound/two.wav", DataPath);
     Sounds[SND_2] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/three.wav", StartPath);
+    sprintf(FileName, "%ssound/three.wav", DataPath);
     Sounds[SND_3] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/oneminute.wav", StartPath);
+    sprintf(FileName, "%ssound/oneminute.wav", DataPath);
     Sounds[SND_1MINUTE] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/fiveminute.wav", StartPath);
+    sprintf(FileName, "%ssound/fiveminute.wav", DataPath);
     Sounds[SND_5MINUTE] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/timeover.wav", StartPath);
+    sprintf(FileName, "%ssound/timeover.wav", DataPath);
     Sounds[SND_TIMEOVER] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/menu.wav", StartPath);
+    sprintf(FileName, "%ssound/menu.wav", DataPath);
     Sounds[SND_MENU] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/select.wav", StartPath);
+    sprintf(FileName, "%ssound/select.wav", DataPath);
     Sounds[SND_SELECT] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/welcome.wav", StartPath);
+    sprintf(FileName, "%ssound/welcome.wav", DataPath);
     Sounds[SND_WELCOME] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/goodbye.wav", StartPath);
+    sprintf(FileName, "%ssound/goodbye.wav", DataPath);
     Sounds[SND_GOODBYE] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/delete.wav", StartPath);
+    sprintf(FileName, "%ssound/delete.wav", DataPath);
     Sounds[SND_DELETE] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/blockselect.wav", StartPath);
+    sprintf(FileName, "%ssound/blockselect.wav", DataPath);
     Sounds[SND_BLOCKSELECT] = Mix_LoadWAV(FileName);
-    sprintf(FileName, "%ssound/error.wav", StartPath);
+    sprintf(FileName, "%ssound/error.wav", DataPath);
     Sounds[SND_ERROR] = Mix_LoadWAV(FileName);
   }
 }
@@ -1847,7 +1847,9 @@ void CGame::Run(int argc, char *argv[]) {
   bool useLinear = false;
   bool useVsync = true;
   bool useFullScreenAtStartup = false;
+  char StartPath[PATH_MAX] = {'\0'};
   GetFilePath(argv[0], StartPath);
+  sprintf(DataPath, "%sznaxfs/", StartPath);
   int c;
   while ((c = getopt(argc, argv, "?slfdr")) != -1) {
     switch (c) {
@@ -1931,10 +1933,10 @@ Possible options are:\n\
         if (TTF_Init() == 0) {
           char Filename[PATH_MAX + FILENAME_MAX] = {'\0'};
           SDL_Log("Succesfully initialized TTF\n");
-          sprintf(Filename, "%sdata/Roboto-Regular.ttf", StartPath);
+          sprintf(Filename, "%sdata/Roboto-Regular.ttf", DataPath);
           font = TTF_OpenFont(Filename, 11);
           BigFont = TTF_OpenFont(Filename, 16);
-          sprintf(Filename, "%sdata/RobotoMono-Bold.ttf", StartPath);
+          sprintf(Filename, "%sdata/RobotoMono-Bold.ttf", DataPath);
           MonoFont = TTF_OpenFont(Filename, 12);
           if (font && BigFont && MonoFont) {
             SkinName[0] = '\0';
