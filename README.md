@@ -80,9 +80,15 @@ you would execute the following command in the main source directory
 make 
 ```
 
-on windows you would need to specify the extra makefile included to build on mingw32
+on windows you would need to specify the extra makefile included to build on (old) msys / mingw32
 ```
 make -f Makefile.win32mingw
+```
+
+or if you use recent msys2 - mingw32 development environment (it works for both i686 / x86_64 setups)
+
+```
+make -f Makefile.msys2-mingw
 ```
 
 ## Installing

@@ -1,0 +1,30 @@
+SRC_DIR=src
+OBJ_DIR=obj
+BIN_DIR=.
+
+EXE=$(BIN_DIR)/znax.exe
+SRC=$(wildcard $(SRC_DIR)/*.cpp)
+OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
+CC=g++
+OPT_LEVEL=-O2
+CFLAGS=-Wall -Wextra -std=c++11
+CPPFLAGS=-I$(MINGW_PREFIX)/include -I$(MINGW_PREFIX)/include/SDL2
+LDFLAGS=-L$(MINGW_PREFIX)/lib -mwindows
+LDLIBS=-lMingw32 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_gfx -lSDL2main -lSDL2 
+
+.PHONY: all clean
+
+all: $(EXE)
+
+$(EXE): $(OBJS)
+	$(CC) $(LDFLAGS) $(TARGET_ARCH) $^ $(LDLIBS) -o $@ 
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(BIN_DIR) $(OBJ_DIR):
+	mkdir -p $@
+
+clean:
+	$(RM) -rv *~ $(OBJS) $(EXE)
