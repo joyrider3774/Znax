@@ -86,8 +86,7 @@ make -f Makefile.win32mingw
 ```
 
 ## Installing
-once the binary has been build you can install the game. I have provided a desktop shortcut and the game will install it. I have only tried this part
-on raspbian buster, but by default the game would install all files to `/usr/games/znax`.
+once the binary has been build you can install the game. I have provided a desktop shortcut and the game will install it. I have only tried this part on raspbian buster, but by default the game would install all files to `/usr/games/znax`.
 
 to install you would execute the following command after the binary has been build
 ```
@@ -102,19 +101,15 @@ if no desktop icon is visible you can still run the game by starting a terminal 
 ```
 
 
-if you don't want to install the game but still play it you can copy the build `znax` binary to the `znaxfs` directory and you can launch the game from there 
+if you don't want to install the game but still play it you can just launch the game from build directory after building it
 
 ```
-cp znax ./znaxfs
-cd znaxfs
 ./znax
 ```
 
 or on windows
 
 ```
-cp znax.exe znaxfs
-cd znaxfs
 znax.exe
 ```
 
