@@ -9,7 +9,7 @@ OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CC=g++
 OPT_LEVEL=-O2 
-CFLAGS=-Wall -Wextra
+CFLAGS=-Wall -Wextra -std=c++11
 CPPFLAGS=-I/usr/include -I/usr/include/SDL2
 LDFLAGS=-L/usr/lib
 LDLIBS=-lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lX11
