@@ -1,4 +1,6 @@
 # Znax
+![DownloadCountTotal](https://img.shields.io/github/downloads/joyrider3774/Znax/total?label=total%20downloads&style=plastic) ![DownloadCountLatest](https://img.shields.io/github/downloads/joyrider3774/Znax/latest/total?style=plastic) ![LatestVersion](https://img.shields.io/github/v/tag/joyrider3774/Znax?label=Latest%20version&style=plastic) ![License](https://img.shields.io/github/license/joyrider3774/Znax?style=plastic)
+
 Znax is a cross platform puzzle / arcade game using SDL2 libraries.
 It has skin support and can be played using a keyboard, mouse or touchscreen
 
