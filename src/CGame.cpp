@@ -5,7 +5,7 @@
 #include "CWorldParts.h"
 #include "Common.h"
 #include <SDL.h>
-#include <SDL_Joystick.h>
+#include <SDL_joystick.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_image.h>
 #include <dirent.h>

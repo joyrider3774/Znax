@@ -4,7 +4,7 @@
 #include "CWorldParts.h"
 #include "Common.h"
 #include <SDL.h>
-#include <SDL_Joystick.h>
+#include <SDL_joystick.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <dirent.h>
