@@ -1841,6 +1841,14 @@ void CGame::GetFilePath(char *InputFile, char *result) {
   memcpy(result, InputFile, Pos);
 }
 
+static int SDLCALL my_event_filter(void *userdata, SDL_Event *event)
+{
+    if ((event->type == SDL_MOUSEBUTTONUP) || (event->type == SDL_MOUSEBUTTONDOWN)) {
+      return (((SDL_MouseButtonEvent *)event)->which != SDL_TOUCH_MOUSEID);
+    }
+    return 1;
+}
+
 void CGame::Run(int argc, char *argv[]) {
 
   bool useSoftwareRenderer = false;
@@ -1943,6 +1951,7 @@ Possible options are:\n\
             srand(time(NULL));
             SDL_Log("Succesfully Loaded fonts\n");
             TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+            SDL_SetEventFilter(my_event_filter, NULL);
             // Main game loop that loops untile the gamestate = GSQuit
             // and calls the procedure according to the gamestate.
             SearchForMusic();
