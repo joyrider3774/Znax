@@ -43,7 +43,7 @@ install: all
 
 	install -m 0755 $(EXE) $(GAMEDIR)
 	install -m 0644 $(DAT_DIR)/data/znax.desktop $(DESKTOPDIR) 
-	yes | cp -rf $(DAT_DIR) $(GAMEDIR)
+	/usr/bin/cp -rf $(DAT_DIR) $(GAMEDIR)
 
 uninstall:
 	$(RM) -rf $(GAMEDIR)
