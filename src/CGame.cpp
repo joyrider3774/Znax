@@ -5,6 +5,7 @@
 #include "CWorldParts.h"
 #include "Common.h"
 #include <SDL.h>
+#include <SDL_Joystick.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_image.h>
 #include <dirent.h>
@@ -40,6 +41,112 @@ void CGame::UnloadMusic() {
     for (int Teller = 0; Teller < MusicCount; Teller++)
       if (Music[Teller])
         Mix_FreeMusic(Music[Teller]);
+  }
+}
+
+void CGame::ResetButtons() {
+  ButLeft = false;
+  ButRight = false;
+  ButUp = false;
+  ButDown = false;
+  ButNextSkin = false; 
+  ButVolDown = false;
+  ButVolUp = false;
+  ButNextMusic = false;
+  ButBack = false; 
+  ButA = false; 
+  ButB = false;
+  ButFullscreen = false;
+  ButStart = false;
+}
+
+void CGame::HandleJoystickEvent(int Button) {
+  switch (Button)
+  {
+    case SDL_CONTROLLER_BUTTON_Y:
+      ButNextSkin = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_X:
+      ButNextMusic = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+      ButVolDown = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+      ButVolUp = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_DPAD_UP:
+      ButUp = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+      ButDown = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+      ButLeft = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+      ButRight = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_A:
+      ButA = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_B:
+      ButB = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_START:
+      ButStart = true;
+      break;
+    case SDL_CONTROLLER_BUTTON_BACK:
+      ButBack = true;
+      break;
+    default:
+      break;
+  }
+}
+
+void CGame::HandleKeyboardEvent(int Key) {
+  switch (Key) {
+    case SDLK_f:
+      ButFullscreen = true;
+      break;
+    case SDLK_m:
+      ButNextMusic = true;
+      break;
+    case SDLK_l:
+      ButNextSkin = true;
+      break;
+    case SDLK_PAGEDOWN:
+      ButVolDown = true;
+      break;
+    case SDLK_PAGEUP:
+      ButVolUp = true;
+      break;
+    case SDLK_UP:
+      ButUp = true;
+      break;
+    case SDLK_DOWN:
+      ButDown = true;
+      break;
+    case SDLK_LEFT:
+      ButLeft = true;
+      break;
+    case SDLK_RIGHT:
+      ButRight = true;
+      break;
+    case SDLK_RETURN:
+      ButStart = true;
+      break;
+    case SDLK_ESCAPE:
+      ButBack = true;
+      break;
+    case SDLK_SPACE:
+      ButA = true;
+      break;
+    case SDLK_b:
+      ButB = true;
+      break;
+    default:
+      break;
   }
 }
 
@@ -678,50 +785,32 @@ void CGame::GameTypeMenu() {
           SetVolume(Volume);
         }
         
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
+      
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
 
-      if (Event.type == SDL_KEYDOWN)
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_UP:
-          Menu->NextItem();
-          break;
-        case SDLK_DOWN:
-          Menu->PreviousItem();
-          break;
-        case SDLK_RETURN:
-          if (GlobalSoundEnabled)
-            Mix_PlayChannel(-1, Sounds[SND_SELECT], 0);
-          switch (Menu->GetSelection()) {
-          case Fixed:
-            GameType = Fixed;
-            break;
-          case Relative:
-            GameType = Relative;
-            break;
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
           }
-          GameState = GSReadyGo;
-          break;
-        case SDLK_ESCAPE:
-          GameState = GSTitleScreen;
-          break;
+      }
 
-        default:
-          break;
-        }
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent(Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent(Event.key.keysym.sym);
 
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
         int RealX;
@@ -749,6 +838,42 @@ void CGame::GameTypeMenu() {
         }
       }
     }
+
+     if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButVolDown)
+      DecVolume();
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButUp)
+      Menu->NextItem();
+
+    if (ButDown)
+      Menu->PreviousItem();
+
+    if (ButStart || ButA) {
+      if (GlobalSoundEnabled)
+          Mix_PlayChannel(-1, Sounds[SND_SELECT], 0);
+        switch (Menu->GetSelection()) {
+          case Fixed:
+            GameType = Fixed;
+            break;
+          case Relative:
+            GameType = Relative;
+            break;
+        }
+        GameState = GSReadyGo;
+    }
+
+    if (ButBack || ButB)
+      GameState = GSTitleScreen;
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     Menu->Draw(Renderer);
 
@@ -792,34 +917,54 @@ void CGame::Credits() {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
-        
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
+
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
+      }
 
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
 
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP))
-        GameState = GSTitleScreen;
+        ButA = true;
 
-      if (Event.type == SDL_KEYDOWN)
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        default:
-          GameState = GSTitleScreen;
-          break;
-        }
+      if (Event.type == SDL_CONTROLLERBUTTONUP)  
+        HandleJoystickEvent(Event.cbutton.button);
+          
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent (Event.key.keysym.sym);
     }
+
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButVolDown)
+      DecVolume();
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButA || ButB || ButBack || ButStart)
+      GameState = GSTitleScreen;
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     SDL_RenderCopy(Renderer, IMGTitleScreen, NULL, NULL);
     SDL_RenderCopy(Renderer, IMGCredits, NULL, &Rect1);
@@ -863,9 +1008,27 @@ void CGame::TitleScreen() {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
+
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
+      }
 
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
         int RealX;
@@ -905,12 +1068,55 @@ void CGame::TitleScreen() {
         }
       }
 
-      if (Event.type == SDL_KEYDOWN)
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent(Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent(Event.key.keysym.sym);
+    }
+
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButVolDown)
+      DecVolume();
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButBack) {
+      GameState = GSQuit;
+      if (GlobalSoundEnabled) {
+        Mix_HaltMusic();
+        Mix_PlayChannel(-1, Sounds[SND_GOODBYE], 0);
+      }
+      SDL_Delay(750);
+    }
+
+    if (ButUp)
+      Menu->PreviousItem();
+
+    if (ButDown)
+      Menu->NextItem();
+
+    if (ButStart || ButA) {
+      if (Menu->GetSelection() != 4)
+        if (GlobalSoundEnabled)
+          Mix_PlayChannel(-1, Sounds[SND_SELECT], 0);
+      switch (Menu->GetSelection()) {
+        case 1:
+          GameState = GSGameTypeMenu;
           break;
-        case SDLK_ESCAPE:
+        case 2:
+          GameState = GSShowHighScores;
+          break;
+        case 3:
+          GameState = GSCredits;
+          break;
+        case 4:
           GameState = GSQuit;
           if (GlobalSoundEnabled) {
             Mix_HaltMusic();
@@ -918,48 +1124,9 @@ void CGame::TitleScreen() {
           }
           SDL_Delay(750);
           break;
-        case SDLK_UP:
-          Menu->PreviousItem();
-          break;
-        case SDLK_DOWN:
-          Menu->NextItem();
-          break;
-        case SDLK_RETURN:
-          if (Menu->GetSelection() != 4)
-            if (GlobalSoundEnabled)
-              Mix_PlayChannel(-1, Sounds[SND_SELECT], 0);
-          switch (Menu->GetSelection()) {
-          case 1:
-            GameState = GSGameTypeMenu;
-            break;
-          case 2:
-            GameState = GSShowHighScores;
-            break;
-          case 3:
-            GameState = GSCredits;
-            break;
-          case 4:
-            GameState = GSQuit;
-            if (GlobalSoundEnabled) {
-              Mix_HaltMusic();
-              Mix_PlayChannel(-1, Sounds[SND_GOODBYE], 0);
-            }
-            SDL_Delay(750);
-            break;
-          }
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-        default:
-          break;
-        }
+      }
     }
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     Menu->Draw(Renderer);
 
@@ -1006,81 +1173,105 @@ void CGame::GetHighScoreName(char NameIn[21], int Place, int PScore) {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
 
-      if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
-        End = true;
-        SubmitChanges = true;
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
       }
+
+      if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
+        ButStart = true;
+      }
+
       if (Event.type == SDL_QUIT) {
         GameState = GSQuit;
         End = true;
         SubmitChanges = false;
       }
 
-      if (Event.type == SDL_KEYDOWN) {
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_LEFT:
-          if (Selection > 0) {
-            Selection--;
-            asci = ord(Name[Selection]);
-          }
-          break;
-        case SDLK_RIGHT:
-          if (Selection < 19) {
-            Selection++;
-            if (Selection > MaxSelection) {
-              Name[Selection] = chr(97);
-              Name[Selection + 1] = '\0';
-              MaxSelection = Selection;
-            }
-            asci = ord(Name[Selection]);
-          }
-          break;
-        case SDLK_UP:
-          asci++;
-          if (asci == 123)
-            asci = 32;
-          if (asci == 33)
-            (asci = 48);
-          if (asci == 58)
-            asci = 97;
-          Name[Selection] = chr(asci);
-          break;
-        case SDLK_DOWN:
-          asci--;
-          if (asci == 96)
-            asci = 57;
-          if (asci == 47)
-            asci = 32;
-          if (asci == 31)
-            asci = 122;
-          Name[Selection] = chr(asci);
-          break;
-        case SDLK_RETURN:
-          if (GlobalSoundEnabled)
-            Mix_PlayChannel(-1, Sounds[SND_SELECT], 0);
-          End = true;
-          SubmitChanges = true;
-          break;
-        case SDLK_ESCAPE:
-          End = true;
-          SubmitChanges = false;
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        default:
-          break;
-        }
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent(Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent (Event.key.keysym.sym);
+    }
+
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButLeft) {
+      if (Selection > 0) {
+        Selection--;
+        asci = ord(Name[Selection]);
       }
     }
+
+    if (ButRight) {
+      if (Selection < 19) {
+        Selection++;
+        if (Selection > MaxSelection) {
+          Name[Selection] = chr(97);
+          Name[Selection + 1] = '\0';
+          MaxSelection = Selection;
+        }
+        asci = ord(Name[Selection]);
+      }
+    }
+
+    if (ButUp) {
+      asci++;
+      if (asci == 123)
+        asci = 32;
+      if (asci == 33)
+        (asci = 48);
+      if (asci == 58)
+        asci = 97;
+      Name[Selection] = chr(asci);
+    }
+
+    if (ButDown) {
+      asci--;
+      if (asci == 96)
+        asci = 57;
+      if (asci == 47)
+        asci = 32;
+      if (asci == 31)
+        asci = 122;
+      Name[Selection] = chr(asci);
+    }
+
+    if (ButStart || ButA) {
+      if (GlobalSoundEnabled)
+        Mix_PlayChannel(-1, Sounds[SND_SELECT], 0);
+      End = true;
+      SubmitChanges = true;
+    }
+
+    if (ButBack) {
+      End = true;
+      SubmitChanges = false;
+    }
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButVolDown)
+      DecVolume();
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     SDL_RenderCopy(Renderer, IMGHighScores, NULL, NULL);
 
@@ -1158,29 +1349,47 @@ void CGame::TimeOver() {
   memset(Name, '\0', 21);
   SDL_SetTextureBlendMode(TextureBuffer1, SDL_BLENDMODE_BLEND);
   while (GameState == GSTimeOver) {
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
-      if (Event.type == SDL_KEYDOWN) {
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_ESCAPE:
-          GameState = GSShowHighScores;
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        default:
-          break;
-        }
+
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
       }
+
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent(Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent(Event.key.keysym.sym);
     }
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButBack || ButStart || ButA)
+      GameState = GSShowHighScores;
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButVolDown)
+      DecVolume();
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     World->Draw(Renderer);
 
@@ -1273,38 +1482,64 @@ void CGame::ReadyGo() {
         }
       }
     }
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
-      if (Event.type == SDL_MOUSEBUTTONDOWN) {
-        int RealX = Event.button.x;
-        int RealY = Event.button.y;
+      if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
+        int RealX;
+        int RealY;
+        if (Event.type == SDL_FINGERUP) {
+          RealX = Event.tfinger.x * 320; //needs to be logical size
+          RealY = Event.tfinger.y * 240; //needs to be logical size
+        } else {
+          RealX = Event.button.x;
+          RealY = Event.button.y;
+        }
         if (((RealX > 247)) && (RealX < 290) && (RealY > 180) && (RealY < 200))
           GameState = GSTitleScreen;
+      }
+
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
       }
 
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
 
-      if (Event.type == SDL_KEYDOWN)
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_ESCAPE:
-          GameState = GSTitleScreen;
-          break;
-        default:
-          break;
-        }
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent(Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent(Event.key.keysym.sym);
     }
+
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButVolDown)
+      DecVolume();
+      
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButBack)
+      GameState = GSTitleScreen;
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     World->Draw(Renderer);
     switch (Counter) {
@@ -1384,7 +1619,24 @@ void CGame::Intro() {
   Uint32 AlphaTimer = SDL_GetTicks();
   while (GameState == GSIntro) {
     while (SDL_PollEvent(&Event)) {
-      if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP))
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
+      }
+
+      if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP) || 
+        (Event.type == SDL_CONTROLLERBUTTONUP))
         GameState = GSTitleScreen;
       if (Event.type == SDL_KEYUP)
         GameState = GSTitleScreen;
@@ -1466,63 +1718,30 @@ void CGame::Game() {
         }
       }
     }
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
-      if (Event.type == SDL_KEYDOWN) {
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_ESCAPE:
-          GameState = GSTitleScreen;
-          break;
-        case SDLK_RETURN:
-          AddToScore += World->Select(Selector->GetPosition().X,
-                                      Selector->GetPosition().Y);
-          if (AddToScore != 0) {
-            ScoreTimer = SDL_GetTicks() + 700;
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
           }
-          break;
-        case SDLK_LEFT:
-          Selector->SetPosition(Selector->GetPosition().X - 1,
-                                Selector->GetPosition().Y);
-          break;
-        case SDLK_RIGHT:
-          Selector->SetPosition(Selector->GetPosition().X + 1,
-                                Selector->GetPosition().Y);
-          break;
-        case SDLK_UP:
-          Selector->SetPosition(Selector->GetPosition().X,
-                                Selector->GetPosition().Y - 1);
-          break;
-        case SDLK_DOWN:
-          Selector->SetPosition(Selector->GetPosition().X,
-                                Selector->GetPosition().Y + 1);
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-          break;
-        case SDLK_r:
-          if (MusicCount > 1) {
-            SelectedMusic++;
-            if (SelectedMusic >= MusicCount)
-              SelectedMusic = 1;
-            if (GlobalSoundEnabled) {
-              Mix_HaltMusic();
-              Mix_PlayMusic(Music[SelectedMusic], 0);
-              SetVolume(Volume);
-            }
-          }
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        default:
-          break;
-        }
       }
+
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent (Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+       HandleKeyboardEvent(Event.key.keysym.sym);
 
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
@@ -1552,6 +1771,59 @@ void CGame::Game() {
           GameState = GSTitleScreen;
       }
     }
+
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButBack)  
+      GameState = GSTitleScreen;
+
+    if (ButA || ButStart)  {
+      AddToScore += World->Select(Selector->GetPosition().X,
+        Selector->GetPosition().Y);
+      if (AddToScore != 0) {
+        ScoreTimer = SDL_GetTicks() + 700;
+      }
+    }
+
+    if (ButLeft)
+      Selector->SetPosition(Selector->GetPosition().X - 1,
+        Selector->GetPosition().Y);
+
+    if (ButRight)
+      Selector->SetPosition(Selector->GetPosition().X + 1,
+        Selector->GetPosition().Y);
+
+    if (ButUp)
+      Selector->SetPosition(Selector->GetPosition().X,
+        Selector->GetPosition().Y - 1);
+
+    if (ButDown)
+      Selector->SetPosition(Selector->GetPosition().X,
+        Selector->GetPosition().Y + 1);
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButNextMusic) {
+      if (MusicCount > 1) {
+        SelectedMusic++;
+        if (SelectedMusic >= MusicCount)
+          SelectedMusic = 1;
+        if (GlobalSoundEnabled) {
+          Mix_HaltMusic();
+          Mix_PlayMusic(Music[SelectedMusic], 0);
+          SetVolume(Volume);
+        }
+      }
+    }
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButVolDown)
+      DecVolume();
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     World->Draw(Renderer);
     Selector->Draw(Renderer);
@@ -1704,7 +1976,25 @@ void CGame::ShowHighScores() {
           Mix_PlayMusic(Music[SelectedMusic], 0);
           SetVolume(Volume);
         }
+
+    ResetButtons();
     while (SDL_PollEvent(&Event)) {
+      if (Event.type == SDL_JOYDEVICEADDED)
+        if(GameController == NULL)
+          if(SDL_IsGameController(Event.jdevice.which))
+            GameController = SDL_GameControllerOpen(Event.jdevice.which);
+
+      if (Event.type == SDL_JOYDEVICEREMOVED)
+      {
+        SDL_Joystick* Joystick = SDL_GameControllerGetJoystick(GameController);
+        if (Joystick)
+          if (Event.jdevice.which == SDL_JoystickInstanceID(Joystick))
+          {
+            SDL_GameControllerClose(GameController);
+            GameController = NULL;
+          }
+      }
+
       if ((Event.type == SDL_FINGERUP) || (Event.type == SDL_MOUSEBUTTONUP)) {
         if (ScoreType == Fixed)
           ScoreType = Relative;
@@ -1715,33 +2005,35 @@ void CGame::ShowHighScores() {
       if (Event.type == SDL_QUIT)
         GameState = GSQuit;
 
-      if (Event.type == SDL_KEYDOWN)
-        switch (Event.key.keysym.sym) {
-        case SDLK_f:
-          ToggleFullscreen();
-          break;
-        case SDLK_l:
-          NextSkin(TextureBuffer1);
-          break;
-        case SDLK_PAGEDOWN:
-          DecVolume();
-          break;
-        case SDLK_PAGEUP:
-          IncVolume();
-          break;
-        case SDLK_RETURN:
-          if (ScoreType == Fixed)
-            ScoreType = Relative;
-          else
-            GameState = GSTitleScreen;
-          break;
-        case SDLK_ESCAPE:
-          GameState = GSTitleScreen;
-          break;
-        default:
-          break;
-        }
+      if (Event.type == SDL_CONTROLLERBUTTONUP)
+        HandleJoystickEvent(Event.cbutton.button);
+
+      if (Event.type == SDL_KEYUP)
+        HandleKeyboardEvent(Event.key.keysym.sym);
     }
+
+    if (ButFullscreen)
+      ToggleFullscreen();
+
+    if (ButNextSkin)
+      NextSkin(TextureBuffer1);
+
+    if (ButVolDown)
+      DecVolume();
+
+    if (ButVolUp)
+      IncVolume();
+
+    if (ButStart || ButA) {
+      if (ScoreType == Fixed)
+        ScoreType = Relative;
+      else
+        GameState = GSTitleScreen;
+    }
+
+    if (ButBack)
+      GameState = GSTitleScreen;
+
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
     SDL_RenderCopy(Renderer, IMGHighScores, NULL, NULL);
 
@@ -1892,7 +2184,7 @@ Possible options are:\n\
     }
   }
 
-  if (SDL_Init(SDL_INIT_VIDEO) == 0) {
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) == 0) {
     Uint32 WindowFlags = SDL_WINDOW_RESIZABLE;
     if (useFullScreenAtStartup) {
       WindowFlags |= SDL_WINDOW_FULLSCREEN;
@@ -1946,12 +2238,23 @@ Possible options are:\n\
           BigFont = TTF_OpenFont(Filename, 16);
           sprintf(Filename, "%sdata/RobotoMono-Bold.ttf", DataPath);
           MonoFont = TTF_OpenFont(Filename, 12);
-          if (font && BigFont && MonoFont) {
+          if (font && BigFont && MonoFont) {            
             SkinName[0] = '\0';
             srand(time(NULL));
             SDL_Log("Succesfully Loaded fonts\n");
             TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
             SDL_SetEventFilter(my_event_filter, NULL);
+            //Check for joysticks
+            for (int i=0; i < SDL_NumJoysticks(); i++)
+            {
+              if(SDL_IsGameController(i))
+              {
+                GameController = SDL_GameControllerOpen(i);
+                SDL_GameControllerEventState(SDL_ENABLE);
+                SDL_Log("Joystick Detected!\n");
+                break;
+              }
+            }
             // Main game loop that loops untile the gamestate = GSQuit
             // and calls the procedure according to the gamestate.
             SearchForMusic();
@@ -2024,6 +2327,10 @@ Possible options are:\n\
             TTF_CloseFont(MonoFont);
             TTF_CloseFont(BigFont);
             font = NULL;
+            if(GameController) {
+              SDL_GameControllerClose(GameController);
+              GameController = NULL;
+            }
           } else {
             SDL_Log("Failed loading fonts: %s\n", SDL_GetError());
           }

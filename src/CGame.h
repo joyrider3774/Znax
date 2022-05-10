@@ -4,6 +4,7 @@
 #include "CWorldParts.h"
 #include "Common.h"
 #include <SDL.h>
+#include <SDL_Joystick.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <dirent.h>
@@ -54,7 +55,12 @@ private:
   char DataPath[PATH_MAX] = {'\0'};
   bool GlobalSoundEnabled = true;
   bool ShowFPS = false;
+  bool ButLeft = false, ButRight = false, ButUp = false, ButDown = false, ButNextSkin = false, 
+       ButVolDown = false, ButVolUp = false, ButNextMusic = false, ButBack = false, 
+       ButStart = false, ButA = false, ButB = false, ButFullscreen = false;
+
   SDL_Texture *TextureBuffer1 = NULL, *TextureBuffer2 = NULL;
+  SDL_GameController* GameController = NULL;
 
 public:
   CGame();
@@ -83,11 +89,14 @@ public:
   void ReadyGo();
   void Intro();
   void Game();
+  void ResetButtons();
   void LoadHighScores();
   void SaveHighScores();
   void ShowHighScores();
   void LoadSounds();
   void UnloadSounds();
+  void HandleJoystickEvent(int Button);
+  void HandleKeyboardEvent(int Key);
   void GetFilePath(char *InputFile, char *result);
   void Run(int argc, char **argv);
   void WriteText(TTF_Font *FontIn, char *Tekst, int NrOfChars, int X, int Y,
