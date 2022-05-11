@@ -46,7 +46,7 @@ install: all
 	install -m 0755 $(EXE) $(GAMEDIR)
 	install -m 0644 $(DAT_DIR)/data/znax.desktop $(DESKTOPDIR) 
 	install -m 0644 $(DAT_DIR)/data/znax.svg $(ICONDIR)
-	/usr/bin/cp -rf $(DAT_DIR) $(GAMEDIR)
+	\cp -rf $(DAT_DIR) $(GAMEDIR)
 
 uninstall:
 	$(RM) -rf $(GAMEDIR)
