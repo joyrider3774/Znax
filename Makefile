@@ -9,9 +9,15 @@ OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 CC ?= g++
 PREFIX ?= /usr
 OPT_LEVEL ?= -O2 
-CPPFLAGS ?= -Wall -Wextra -std=c++11 -I/usr/include -I/usr/include/SDL2
+CPPFLAGS ?= -Wall -Wextra -std=c++11 `sdl2-config --cflags` -I/usr/include -I/usr/include/SDL2  
 LDFLAGS ?= -L$(PREFIX)/lib
-LDLIBS ?= -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lX11 -lm -lstdc++
+LDLIBS ?= `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lm -lstdc++
+
+#MINGW does not have X11 and does not require it
+#dont know about cygwin
+ifneq ($(OS),Windows_NT)
+LDLIBS += -lX11
+endif
 
 GAMEDIR = $(PREFIX)/games/znax
 DESKTOPDIR = $(PREFIX)/share/applications
