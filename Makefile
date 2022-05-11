@@ -19,7 +19,7 @@ ifeq ($(PREFIX),)
 endif
 GAMEDIR=$(PREFIX)/games/znax
 DESKTOPDIR=$(PREFIX)/share/applications
-ICONDIR=$(PREFIX)/local/share/icons/hicolor/scalable/apps
+ICONDIR=$(PREFIX)/share/icons/hicolor/scalable/apps
 
 
 .PHONY: all clean
