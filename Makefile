@@ -44,11 +44,11 @@ install: all
 	install -d $(ICONDIR)
 
 	install -m 0755 $(EXE) $(GAMEDIR)
-	install -m 0644 $(DAT_DIR)/data/znax.desktop $(DESKTOPDIR) 
-	install -m 0644 $(DAT_DIR)/data/znax.svg $(ICONDIR)
+	install -m 0644 $(DAT_DIR)/data/io.github.joyrider3774.znax.desktop $(DESKTOPDIR) 
+	install -m 0644 $(DAT_DIR)/data/io.github.joyrider3774.znax.svg $(ICONDIR)
 	\cp -rf $(DAT_DIR) $(GAMEDIR)
 
 uninstall:
 	$(RM) -rf $(GAMEDIR)
-	$(RM) -f $(DESKTOPDIR)/znax.desktop
-	$(RM) -f $(ICONDIR)/znax.svg
+	$(RM) -f $(DESKTOPDIR)/io.github.joyrider3774.znax.desktop
+	$(RM) -f $(ICONDIR)/io.github.joyrider3774.znax.svg

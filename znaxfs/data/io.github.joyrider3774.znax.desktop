@@ -4,7 +4,7 @@ Type=Application
 Name=znax
 Categories=Game;
 Exec=/usr/games/znax/znax
-Icon=znax
+Icon=io.github.joyrider3774.znax
 StartupWMClass=znax
 
 
