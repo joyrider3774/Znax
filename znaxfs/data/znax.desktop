@@ -4,7 +4,7 @@ Type=Application
 Name=znax
 Categories=Game;
 Exec=/usr/games/znax/znax
-Icon=/usr/games/znax/icon/znax.png
+Icon=/usr/games/znax/znafs/data/znax.svg
 StartupWMClass=znax
 
 
