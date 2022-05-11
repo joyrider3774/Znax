@@ -51,4 +51,4 @@ install: all
 uninstall:
 	$(RM) -rf $(GAMEDIR)
 	$(RM) -f $(DESKTOPDIR)/znax.desktop
-	$(RM) -f $(ICONFILE)
+	$(RM) -f $(ICONDDIR)/znax.svg
