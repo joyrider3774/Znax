@@ -44,6 +44,7 @@ install: all
 	install -d $(ICONDIR)
 
 	install -m 0755 $(EXE) $(GAMEDIR)
+	sed -i '6c\Exec=$(GAMEDIR)/$(EXE)' $(DAT_DIR)/data/io.github.joyrider3774.znax.desktop
 	install -m 0644 $(DAT_DIR)/data/io.github.joyrider3774.znax.desktop $(DESKTOPDIR) 
 	install -m 0644 $(DAT_DIR)/data/io.github.joyrider3774.znax.svg $(ICONDIR)
 	\cp -rf $(DAT_DIR) $(GAMEDIR)
