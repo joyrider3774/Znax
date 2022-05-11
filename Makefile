@@ -1,24 +1,21 @@
-SRC_DIR=src
-OBJ_DIR=obj
-DAT_DIR=znaxfs
+SRC_DIR = src
+OBJ_DIR = obj
+DAT_DIR = znaxfs
 EXE=znax
 
 SRC=$(wildcard $(SRC_DIR)/*.cpp)
 OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-CC=g++
-OPT_LEVEL=-O2 
-CFLAGS=-Wall -Wextra -std=c++11
-CPPFLAGS=-I/usr/include -I/usr/include/SDL2
-LDFLAGS=-L/usr/lib
-LDLIBS=-lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lX11
+CC ?= g++
+PREFIX ?= /usr
+OPT_LEVEL ?= -O2 
+CPPFLAGS ?= -Wall -Wextra -std=c++11 -I/usr/include -I/usr/include/SDL2
+LDFLAGS ?= -L$(PREFIX)/lib
+LDLIBS ?= -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lX11 -lm -lstdc++
 
-ifeq ($(PREFIX),)
-    PREFIX=$(DESTDIR)/usr
-endif
-GAMEDIR=$(PREFIX)/games/znax
-DESKTOPDIR=$(PREFIX)/share/applications
-ICONDIR=$(PREFIX)/share/icons/hicolor/scalable/apps
+GAMEDIR = $(PREFIX)/games/znax
+DESKTOPDIR = $(PREFIX)/share/applications
+ICONDIR = $(PREFIX)/share/icons/hicolor/scalable/apps
 
 
 .PHONY: all clean
