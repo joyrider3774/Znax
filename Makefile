@@ -19,6 +19,7 @@ ifeq ($(PREFIX),)
 endif
 GAMEDIR=$(PREFIX)/games/znax
 DESKTOPDIR=$(PREFIX)/share/applications
+ICONFILE=$(PREFIX)/local/share/icons/hicolor/scalable/apps/znax.svg
 
 
 .PHONY: all clean
@@ -43,9 +44,10 @@ install: all
 
 	install -m 0755 $(EXE) $(GAMEDIR)
 	install -m 0644 $(DAT_DIR)/data/znax.desktop $(DESKTOPDIR) 
+	install -m 0644 $(DAT_DIR)/data/znax.svg $(ICONFILE)
 	/usr/bin/cp -rf $(DAT_DIR) $(GAMEDIR)
 
 uninstall:
 	$(RM) -rf $(GAMEDIR)
 	$(RM) -f $(DESKTOPDIR)/znax.desktop
- 
+	$(RM) -f $(ICONFILE)
