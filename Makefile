@@ -1,9 +1,8 @@
 SRC_DIR=src
 OBJ_DIR=obj
 DAT_DIR=znaxfs
-BIN_DIR=.
+EXE=znax
 
-EXE=$(BIN_DIR)/znax
 SRC=$(wildcard $(SRC_DIR)/*.cpp)
 OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
@@ -32,7 +31,7 @@ $(EXE): $(OBJS)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-$(BIN_DIR) $(OBJ_DIR):
+$(OBJ_DIR):
 	mkdir -p $@
 
 clean:
