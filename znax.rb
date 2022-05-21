@@ -13,7 +13,7 @@ class Znax < Formula
   depends_on "sdl2_gfx"
   
   def install
-    system "gmake","CFLAGS=\"-I#{HOMEBREW_PREFIX}/include/SDL2\"", "LDFLAGS=\"-L#{HOMEBREW_PREFIX}/lib\""
+    system "make","CFLAGS=\"-I#{HOMEBREW_PREFIX}/include/SDL2\"", "LDFLAGS=\"-L#{HOMEBREW_PREFIX}/lib\""
     bin.install "znax"
     prefix.install "znaxfs"
     bin.install_symlink prefix/"znaxfs"
