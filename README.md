@@ -95,7 +95,7 @@ make -f Makefile.win32mingw
 or if you use recent msys2 - mingw32 development environment (it works for both i686 / x86_64 setups)
 
 ```
-make -f Makefile.msys2-mingw
+make
 ```
 
 ## Installing
@@ -131,6 +131,33 @@ To uninstall the game once it has been installed (on linux) simply type the foll
 
 ```
 sudo make uninstall
+```
+
+### (Mac Os) Homebrew install file
+I don't know how to provide mac binaries but i did create a HomeBrew formula file which you can use to install znax on a mac (or linux)
+
+if you have not installed [Homebrew](https://brew.sh/) yet first install it using this command
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+then download the [znax.rb](znax.rb) formula file and run the following in a console in the directory where znax.rb is located
+
+```
+brew install --formula --build-from-source ./znax.rb
+```
+
+this should build and install znax ready to be used. To run it just type `znax` from anywhere you like
+
+```
+znax
+```
+
+to uninstall the brew package run
+
+```
+brew uninstall znax
 ```
 
 ## Command line options
