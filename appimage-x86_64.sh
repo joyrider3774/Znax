@@ -10,7 +10,7 @@ rm -rf "$PROJ.AppDir"
 mkdir -p "$PROJ.AppDir/usr/bin"
 mkdir -p "$PROJ.AppDir/usr/lib"
 cp "$PROJ" "$PROJ.AppDir/usr/bin"
-cp "$DATA/data/$PROJ".png "$PROJ.AppDir"
+cp "$DATA/data/io.github.joyrider3774.znax.svg" "$PROJ.AppDir/$PROJ.svg"
 
 cp -R "$DATA" "$PROJ.AppDir/usr"
 cd "$PROJ.AppDir"
