@@ -14,9 +14,9 @@ class Znax < Formula
   
   def install
     system "make","CFLAGS=\"-I#{HOMEBREW_PREFIX}/include/SDL2\"", "LDFLAGS=\"-L#{HOMEBREW_PREFIX}/lib\""
-    bin.install "znax"
+    prefix.install "znax"
     prefix.install "znaxfs"
-    bin.install_symlink prefix/"znaxfs"
+    bin.write_exec_script (prefix/"znax")
   end
 
 end
