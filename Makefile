@@ -7,6 +7,7 @@ SRC=$(wildcard $(SRC_DIR)/*.cpp)
 OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CC ?= g++
+DESTDIR ?=
 PREFIX ?= /usr
 OPT_LEVEL ?= -O2 
 CPPFLAGS ?= -Wall -Wextra -std=c++11 `sdl2-config --cflags` -I/usr/include -I/usr/include/SDL2  
@@ -19,9 +20,9 @@ ifneq ($(OS),Windows_NT)
 LDLIBS += -lX11
 endif
 
-GAMEDIR = $(PREFIX)/games/znax
-DESKTOPDIR = $(PREFIX)/share/applications
-ICONDIR = $(PREFIX)/share/icons/hicolor/scalable/apps
+GAMEDIR = $(DESTDIR)$(PREFIX)/games/znax
+DESKTOPDIR = $(DESTDIR)$(PREFIX)/share/applications
+ICONDIR = $(DESTDIR)$(PREFIX)/share/icons/
 
 
 .PHONY: all clean
