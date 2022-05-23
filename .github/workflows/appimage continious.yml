@@ -20,7 +20,7 @@ jobs:
       - name: build
         run: make -j`nproc` install DESTDIR=AppDir
       - name: Build AppImage
-        uses: AppImageCrafters/build-appimage@master
+        uses: ComunidadAylas/build-appimage@master
         env:
           UPDATE_INFO: gh-releases-zsync|joyrider3774|Znax|latest|*x86_64.AppImage.zsync
         with:
