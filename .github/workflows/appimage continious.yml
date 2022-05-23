@@ -1,0 +1,31 @@
+name: C/C++ AppImage
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-appimage:
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libx11-dev
+      - name: build
+        run: make -j`nproc` install DESTDIR=AppDir
+      - name: Build AppImage
+        uses: AppImageCrafters/build-appimage-action@master
+        env:
+          UPDATE_INFO: gh-releases-zsync|joyrider3774|Znax|latest|*x86_64.AppImage.zsync
+        with:
+          recipe: AppImageBuilder.yml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: AppImage
+          path: './*.AppImage*'
