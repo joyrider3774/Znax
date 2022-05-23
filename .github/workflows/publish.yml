@@ -27,4 +27,4 @@ jobs:
           name: Znax Vx.x
           draft: true
           files: |
-            artifacts/*.AppImage*
+            artifacts/AppImage/*.AppImage*
