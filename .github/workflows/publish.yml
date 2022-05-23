@@ -11,8 +11,6 @@ jobs:
           workflow: "appimage continious.yml"
           workflow_conclusion: success
           path: artifacts
-      - name: ReZip Artifacts
-        working-directory: artifacts
       - name: Make Draft Release
         uses: softprops/action-gh-release@v1
         with:
