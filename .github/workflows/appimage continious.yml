@@ -16,15 +16,17 @@ jobs:
       - name: install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libx11-dev
+          sudo apt-get install -y build-essential libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libsdl2-gfx-dev libx11-dev git python2.7-minimal python3-pip python3-setuptools patchelf fakeroot gettext
+          sudo -H pip3 install appimage-builder
+          arch=$(uname -m)
+          sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-${arch}.AppImage -O /usr/bin/appimagetool
+          sudo chmod +x /usr/bin/appimagetool
       - name: build
         run: make -j`nproc` install DESTDIR=AppDir
-      - name: Build AppImage
-        uses: ComunidadAylas/build-appimage@master
+      - name: make appimage
         env:
           UPDATE_INFO: gh-releases-zsync|joyrider3774|Znax|latest|*x86_64.AppImage.zsync
-        with:
-          recipe: AppImageBuilder.yml
+        run: appimage-builder --recipe AppImageBuilder.yml --skip-tests
       - uses: actions/upload-artifact@v2
         with:
           name: AppImage
