@@ -23,6 +23,7 @@ rm -f usr/lib/libasound*
 #rm -f usr/lib/libfreetype*
 #rm -f usr/lib/libharfbuzz*
 #rm -f usr/lib/libz*
+
 strip usr/bin/* usr/lib/*
 
 echo "[Desktop Entry]
@@ -38,5 +39,5 @@ chmod +x AppRun
 cd ..
 wget -N https://github.com/probonopd/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
-./appimagetool-x86_64.AppImage "$PROJ.AppDir" "$PROJ-$ARCH.AppImage"
+ARCH=x86_64 ./appimagetool-x86_64.AppImage "$PROJ.AppDir" "$PROJ-$ARCH.AppImage"
 
