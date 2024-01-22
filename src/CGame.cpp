@@ -87,10 +87,19 @@ void CGame::HandleJoystickEvent(int Button) {
     case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
       ButRight = true;
       break;
+	//trimui have buttons swapped
+	#ifdef TRIMUI_SMART_PRO
+	case SDL_CONTROLLER_BUTTON_B:
+	#else
     case SDL_CONTROLLER_BUTTON_A:
+	#endif
       ButA = true;
       break;
-    case SDL_CONTROLLER_BUTTON_B:
+    #ifdef TRIMUI_SMART_PRO
+	case SDL_CONTROLLER_BUTTON_A:
+	#else
+	case SDL_CONTROLLER_BUTTON_B:
+	#endif
       ButB = true;
       break;
     case SDL_CONTROLLER_BUTTON_START:
@@ -99,6 +108,11 @@ void CGame::HandleJoystickEvent(int Button) {
     case SDL_CONTROLLER_BUTTON_BACK:
       ButBack = true;
       break;
+	#ifdef TRIMUI_SMART_PRO
+	case SDL_CONTROLLER_BUTTON_GUIDE:
+      GameState = GSQuit;
+      break;
+	#endif
     default:
       break;
   }
@@ -179,7 +193,7 @@ void CGame::SearchForMusic() {
   char Path[PATH_MAX + 20]; //+20 to get rid of warnings from sprintf stuff not
                             // sure how to fix
   if (GlobalSoundEnabled) {
-    sprintf(FileName, "%smusic/title.mod", DataPath);
+    sprintf(FileName, "%smusic/title.ogg", DataPath);
     Music[0] = Mix_LoadMUS(FileName);
   }
   Teller = 1;
@@ -1537,7 +1551,7 @@ void CGame::ReadyGo() {
     if (ButVolUp)
       IncVolume();
 
-    if (ButBack)
+    if (ButBack || ButB)
       GameState = GSTitleScreen;
 
     SDL_SetRenderTarget(Renderer, TextureBuffer1);
@@ -1775,7 +1789,7 @@ void CGame::Game() {
     if (ButFullscreen)
       ToggleFullscreen();
 
-    if (ButBack)  
+    if (ButBack || ButB)  
       GameState = GSTitleScreen;
 
     if (ButA || ButStart)  {
@@ -2031,7 +2045,7 @@ void CGame::ShowHighScores() {
         GameState = GSTitleScreen;
     }
 
-    if (ButBack)
+    if (ButBack || ButB)
       GameState = GSTitleScreen;
 
     SDL_SetRenderTarget(Renderer, TextureBuffer1);

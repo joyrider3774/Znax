@@ -6,19 +6,25 @@ EXE=znax
 SRC=$(wildcard $(SRC_DIR)/*.cpp)
 OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-CC ?= g++
+CXX ?= g++
+SDL2CONFIG = sdl2-config
+DEFINES ?= 
 DESTDIR ?=
 PREFIX ?= /usr
 OPT_LEVEL ?= -O2 
-CPPFLAGS ?= -Wall -Wextra -std=c++11 `sdl2-config --cflags` -I/usr/include -I/usr/include/SDL2  
+CPPFLAGS ?= -Wall -Wextra -std=c++11 `$(SDL2CONFIG) --cflags` 
 LDFLAGS ?= -L$(PREFIX)/lib
-LDLIBS ?= `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lm -lstdc++
+LDLIBS ?= `$(SDL2CONFIG) --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lm -lstdc++
 
 #MINGW does not have X11 and does not require it
 #dont know about cygwin
 ifneq ($(OS),Windows_NT)
+ifeq ($(NOX11),)
 LDLIBS += -lX11
 endif
+endif
+
+FINALDEFINES = $(DEFINES)
 
 GAMEDIR = $(DESTDIR)$(PREFIX)/games/znax
 DESKTOPDIR = $(DESTDIR)$(PREFIX)/share/applications
@@ -30,10 +36,10 @@ ICONDIR = $(DESTDIR)$(PREFIX)/share/icons/
 all: $(EXE)
 
 $(EXE): $(OBJS)
-	$(CC) $(LDFLAGS) $(TARGET_ARCH) $^ $(LDLIBS) -o $@ 
+	$(CXX) $(LDFLAGS) $(TARGET_ARCH) $^ $(LDLIBS) $(FINALDEFINES) -o $@ 
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CFLAGS) $(FINALDEFINES) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $@
