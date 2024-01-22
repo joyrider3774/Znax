@@ -206,7 +206,7 @@ void CGame::SearchForMusic() {
       stat(FileName, &Stats);
       if (!S_ISDIR(Stats.st_mode)) {
         if (strncmp(".", Entry->d_name, 1) &&
-            (strcmp("title.mod", Entry->d_name) != 0) &&
+            (strcmp("title.ogg", Entry->d_name) != 0) &&
             (Teller < MaxMusicFiles)) {
           if (GlobalSoundEnabled) {
             Music[Teller] = Mix_LoadMUS(FileName);
