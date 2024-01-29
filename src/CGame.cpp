@@ -63,18 +63,10 @@ void CGame::ResetButtons() {
 void CGame::HandleJoystickEvent(int Button) {
   switch (Button)
   {
-	#if defined(RG35XX_PLUS_BATOCERA)
-    case SDL_CONTROLLER_BUTTON_X:
-	#else
 	case SDL_CONTROLLER_BUTTON_Y:
-	#endif
       ButNextSkin = true;
       break;
-    #if defined(RG35XX_PLUS_BATOCERA)
-    case SDL_CONTROLLER_BUTTON_Y:
-	#else
 	case SDL_CONTROLLER_BUTTON_X:
-	#endif
       ButNextMusic = true;
       break;
     case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
@@ -95,15 +87,14 @@ void CGame::HandleJoystickEvent(int Button) {
     case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
       ButRight = true;
       break;
-	//trimui have buttons swapped
-	#if defined(TRIMUI_SMART_PRO) || defined(RG35XX_PLUS_BATOCERA)
+	#if defined(TRIMUI_SMART_PRO)
 	case SDL_CONTROLLER_BUTTON_B:
 	#else
     case SDL_CONTROLLER_BUTTON_A:
 	#endif
       ButA = true;
       break;
-   #if defined(TRIMUI_SMART_PRO) || defined(RG35XX_PLUS_BATOCERA)
+   #if defined(TRIMUI_SMART_PRO)
 	case SDL_CONTROLLER_BUTTON_A:
 	#else
 	case SDL_CONTROLLER_BUTTON_B:
@@ -113,10 +104,19 @@ void CGame::HandleJoystickEvent(int Button) {
     case SDL_CONTROLLER_BUTTON_START:
       ButStart = true;
       break;
-    case SDL_CONTROLLER_BUTTON_BACK:
+    #if defined(RG35XX_PLUS_BATOCERA)
+	case SDL_CONTROLLER_BUTTON_GUIDE:
+	#else
+	case SDL_CONTROLLER_BUTTON_BACK:
+	#endif
       ButBack = true;
       break;
-	#if defined(TRIMUI_SMART_PRO) || defined(RG35XX_PLUS_BATOCERA)
+	#if defined(RG35XX_PLUS_BATOCERA)
+	case SDL_CONTROLLER_BUTTON_BACK:
+	  GameState = GSQuit;
+      break;
+	#endif
+	#if defined(TRIMUI_SMART_PRO)
 	case SDL_CONTROLLER_BUTTON_GUIDE:
       GameState = GSQuit;
       break;
