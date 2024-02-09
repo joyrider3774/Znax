@@ -8,12 +8,12 @@ OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CXX ?= g++
 SDL2CONFIG = sdl2-config
-DEFINES ?= 
+DEFINES ?=
 DESTDIR ?=
 PREFIX ?= /usr
 OPT_LEVEL ?= -O2 
 CPPFLAGS ?= -Wall -Wextra -std=c++11 `$(SDL2CONFIG) --cflags` 
-LDFLAGS ?= -L$(PREFIX)/lib
+LDFLAGS ?=
 LDLIBS ?= `$(SDL2CONFIG) --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2 -lSDL2_gfx -lm -lstdc++
 
 #MINGW does not have X11 and does not require it
