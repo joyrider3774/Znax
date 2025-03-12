@@ -126,6 +126,56 @@ void CGame::HandleJoystickEvent(int Button) {
   }
 }
 
+#if defined(FUNKEY)
+
+void HandleKeyboardEvent(int Key) {
+  switch (Key) {
+    case SDLK_f:
+      ButFullscreen = true;
+      break;
+    case SDLK_m:
+      ButNextMusic = true;
+      break;
+    case SDLK_n:
+      ButNextSkin = true;
+      break;
+    case SDLK_v:
+      ButVolDown = true;
+      break;
+    case SDLK_o:
+      ButVolUp = true;
+      break;
+    case SDLK_u:
+      ButUp = true;
+      break;
+    case SDLK_d:
+      ButDown = true;
+      break;
+    case SDLK_l:
+      ButLeft = true;
+      break;
+    case SDLK_r:
+      ButRight = true;
+      break;
+    case SDLK_s:
+      ButStart = true;
+      break;
+    case SDLK_k:
+      ButBack = true;
+      break;
+    case SDLK_a:
+      ButA = true;
+      break;
+    case SDLK_b:
+      ButB = true;
+      break;
+    default:
+      break;
+  }
+}
+
+#else
+
 void CGame::HandleKeyboardEvent(int Key) {
   switch (Key) {
     case SDLK_f:
@@ -171,6 +221,8 @@ void CGame::HandleKeyboardEvent(int Key) {
       break;
   }
 }
+
+#endif
 
 void CGame::ToggleFullscreen() {
   // reset window size first before we go fullscreen
