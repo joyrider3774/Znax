@@ -128,7 +128,7 @@ void CGame::HandleJoystickEvent(int Button) {
 
 #if defined(FUNKEY)
 
-void HandleKeyboardEvent(int Key) {
+void CGame::HandleKeyboardEvent(int Key) {
   switch (Key) {
     case SDLK_f:
       ButFullscreen = true;
